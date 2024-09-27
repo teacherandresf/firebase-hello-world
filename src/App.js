@@ -5,10 +5,16 @@ import { database } from './firebase';
 
 function App() {
   const [message, setMessage] = useState('');
+  const [count, setCount] = useState(0);
+
+  function manejaClic(){
+    setCount(count + 1)
+  }
 
   useEffect(() => {
     // Referencia a la ruta en la base de datos
     const messageRef = ref(database, 'message');
+
 
     // Obtener datos de la base de datos
     const unsubscribe = onValue(messageRef, (snapshot) => {
@@ -25,6 +31,8 @@ function App() {
       <h1>Firebase + React: Hola Mundo feo</h1>
       <MyButton />
       <MyButton />
+      <MyButton2 onClick={manejaClic} count={count} />
+      <MyButton2 onClick={manejaClic} count={count} />
       <p>{message}</p>
     </div>
   );
@@ -41,6 +49,14 @@ function MyButton(){
     <div>
       <button onClick={handleClick}>Hazme click {contador}</button>
     </div>
+  )
+}
+
+function MyButton2({onClick, count}){
+  return(
+    <div>
+    <button onClick={onClick} > Botón tipo dos + {count} </button>
+  </div>
   )
 }
 
